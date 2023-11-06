@@ -7,7 +7,7 @@ protected:
 
 public:
 	Decorator(PlaneTicket* resource) : resource(resource) {};
-	virtual void ticketDetails()const = 0;
+	virtual void ticketDetails() const = 0;
 
 };
 

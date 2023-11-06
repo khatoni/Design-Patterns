@@ -8,7 +8,7 @@ public:
 	double getPrice() const override {
 		return price;
 	}
-	std::string getDescription()const override {
+	std::string getDescription() const override {
 		return description;
 	}
 };

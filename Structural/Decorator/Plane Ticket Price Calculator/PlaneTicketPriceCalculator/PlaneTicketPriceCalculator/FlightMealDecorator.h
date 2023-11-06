@@ -6,13 +6,13 @@ public:
 	FlightMealDecorator(PlaneTicket* resource) : Decorator(resource) {
 		this->hasMeal = true;
 	};
-	double getPrice()const override {
+	double getPrice() const override {
 		return resource->getPrice() + 20;
 	}
-	std::string getDescription()const override {
+	std::string getDescription() const override {
 		return resource->getDescription() + "Included flight meal\n";
 	}
-	void ticketDetails()const override {
+	void ticketDetails() const override {
 		std::cout << getDescription() + "\n the final price is \n" << getPrice();
 	}
 };

@@ -22,6 +22,6 @@ public:
 	virtual double getPrice() const = 0;
 	//virtual std::pair<int, char> getSeat()const = 0;
 	virtual ~PlaneTicket() = default;
-	virtual std::string getDescription()const = 0;
+	virtual std::string getDescription() const = 0;
 };
 
