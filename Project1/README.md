@@ -1,8 +1,11 @@
 # Design-Patterns
-Task 1
+
+## Task 1
 
 Design Patterns: Abstract Factory, Factory, Prototype
+
 Introduction
+
 Implement a program which works with 2D figures. It should be possible to easily add support for new figures to the program or remove existing ones. As part of the current task, implement support at least for the following:
 * Triangle — has three sides, specified by their length.
 * Circle — has a radius.
@@ -13,12 +16,14 @@ A figure can be represented by a string. This is done by listing its type, follo
 * "triangle 10 20 30" — a triangle with sides 10, 20, and 30.
 * "circle 2.2" — a circle with a radius of 2.2.
 etc.
+
 Your solution should be able to create a figure from its string representation, or to convert a figure to a string.
 When the program starts, it should ask the user to choose how to enter a list of figures. It should be possible to use the methods specified below, and it should be easy to add new methods.
 
 * Random — creates a list of random figures. The program asks the user how many figures to generate. After that it generates that many random figures with random properties.
 * STDIN — the figures are read from STDIN. The user specifies their count and enters them manually.
 * File — the figures are read from a text file.
+
 For the last two options you don’t have to invent new syntax for entering figures. Instead, you can use the standard string representation for figures.
 After the figures have been entered, the user should be able to:
 * List them to STDOUT.
@@ -27,11 +32,17 @@ After the figures have been entered, the user should be able to:
 
 
 Store the resulting list back into a file.
-Hints
+
+## Hints
+
 Create a hierarchy to represent the figures. First, create an abstract base class or interface Figure. Use it as a base for all figures. It should have an operation called perimeter. Cover all figures with appropriate unit tests.
+
 Use the Prototype design pattern to make it possible to clone a figure without knowing its type (i.e. polymorphic cloning). In some languages, such as Java and C#, there is a specific interface (Cloneable in Java and ICloneable in C#) that must be implemented, and a specific function that you must override. In other languages, such as C++, you have to provide that yourself by either adding a clone method to the base Figure class, or by implementing your own Cloneable class.
+
 Add a "to-string" method to each figure, which returns its string representation. Here, again, some languages, such as Java or C#, have a standard method, that has to be overridden for that purpose (toString in Java and ToString in C#). Others, such as C++ will require you to add that method to the base Figure class, or to create your own base class for things that can be converted to a string.
+
 Next, use the Factory pattern to handle figure creation from different sources.
+
 Create a factory, which allows the user to create a figure from its string representation. Note that you don’t have to parse the string manually. In some languages, you can create a stream from the string and use that to input the data. For example, in C++ you can use std::stringstream (here is how). In others, different classes may be used to achieve the same result. For example, see the following sources for Java:
 Scanner | Java 7 API
 
