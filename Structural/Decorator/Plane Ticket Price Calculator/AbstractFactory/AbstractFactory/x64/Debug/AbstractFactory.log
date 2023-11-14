@@ -1,3 +1,0 @@
-﻿  FileSystem.cpp
-C:\Users\Hp\Desktop\Design-Patterns\Structural\Decorator\Plane Ticket Price Calculator\AbstractFactory\AbstractFactory\FileSystem.cpp(15,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-  AbstractFactory.vcxproj -> C:\Users\Hp\Desktop\Design-Patterns\Structural\Decorator\Plane Ticket Price Calculator\AbstractFactory\x64\Debug\AbstractFactory.exe
