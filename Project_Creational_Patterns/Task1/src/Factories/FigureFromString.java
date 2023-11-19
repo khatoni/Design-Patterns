@@ -62,22 +62,22 @@ public class FigureFromString {
         if (str == null || str.isBlank()) {
             throw new IllegalArgumentException("The string as an argument cannot be null");
         }
-        Scanner sc = new Scanner(str);
-        sc.useDelimiter(" ");
-        String shape = sc.next();
+        Scanner scanner = new Scanner(str);
+        scanner.useDelimiter(" ");
+        String shape = scanner.next();
         Figure answer = switch (shape) {
             case "circle" -> {
-                yield parseCircle(sc);
+                yield parseCircle(scanner);
             }
             case "rectangle" -> {
-                yield parseRectangle(sc);
+                yield parseRectangle(scanner);
             }
             case "triangle" -> {
-                yield parseTriangle(sc);
+                yield parseTriangle(scanner);
             }
             default -> null;
         };
-        sc.close();
+        scanner.close();
         return answer;
     }
 }

@@ -1,6 +1,7 @@
 package Figures;
 
 public interface Figure extends Cloneable {
-     double calculatePerimeter();
+    double calculatePerimeter();
+
     Figure clone();
 }

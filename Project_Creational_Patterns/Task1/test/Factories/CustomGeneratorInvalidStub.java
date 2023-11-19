@@ -2,9 +2,9 @@ package Factories;
 
 import RandomNumberGenerator.Generatible;
 
-public class CustomGeneratorTriangle implements Generatible {
+public class CustomGeneratorInvalidStub implements Generatible {
     @Override
     public double generateRandomDouble() {
-        return (int) 5.0;
+        return -1;
     }
 }

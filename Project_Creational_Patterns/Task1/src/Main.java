@@ -5,46 +5,10 @@ import Figures.Figure;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-/*
-        Figure tmp = FigureFromString.createFigureFromString("circle 5.3");
-        if(tmp != null){
-            System.out.println(tmp.toString());
-        }
-        else {
-            System.out.println("null");
-        }
-        Figure tmp1 = FigureFromString.createFigureFromString("circle 5tr");
-        if(tmp1 != null){
-            System.out.println(tmp1.toString());
-        }
-        else {
-            System.out.println("null");
-        }
-        Figure tmp2 = FigureFromString.createFigureFromString("circle 234");
-        if(tmp2 != null){
-            System.out.println(tmp2.toString());
-        }
-        else {
-            System.out.println("null");
-        }
-        Figure rec = FigureFromString.createFigureFromString("rectangle 24.5 18.29");
-        System.out.println(rec.toString());
-        Figure rec2 = FigureFromString.createFigureFromString("rectangle 24.5");
-        if(rec2 != null)System.out.println(rec.toString());
-        else {
-            System.out.println("null");
-        }
-        Figure tr = FigureFromString.createFigureFromString("triangle 15.23 11.122 232.23");
-        if(tr != null)System.out.println(tr.toString());
-        else {r
-            System.out.println("null");
-        }
-*/
 
         System.out.println("How do you want to create figures : random , stdin , file + filepath\n");
         Scanner scanner = new Scanner(System.in);
@@ -59,7 +23,12 @@ public class Main {
             }
         } while (numberOfFigures == null);
 
-        FigureFactory factory = new AbstractFigureFactory().create(methodOfCreation);
+
+        FigureFactory factory = AbstractFigureFactory.create(methodOfCreation);
+        if (factory == null) {
+            System.out.println("Enter valid method of creation and valid existing file");
+            return;
+        }
         FiguresCollection figures = new FiguresCollection();
         for (int i = 0; i < numberOfFigures; i++) {
             Figure figure = factory.createFigure();
@@ -89,7 +58,7 @@ public class Main {
                 case 1 -> {
                     Integer index = null;
                     do {
-                        System.out.println("Enter how many figures (as a number) do you want to create with this method");
+                        System.out.println("Enter the index");
                         if (scanner.hasNextInt()) {
                             index = scanner.nextInt();
                         } else {
@@ -97,13 +66,17 @@ public class Main {
                         }
                     } while (index == null);
 
+                    if (index < 0 || index >= figures.size()) {
+                        System.out.println("The index is not valid");
+                        return;
+                    }
                     Figure cloning = figures.clone(index);
                     figures.addFigure(cloning);
                 }
                 case 2 -> {
                     Integer index = null;
                     do {
-                        System.out.println("Enter how many figures (as a number) do you want to create with this method");
+                        System.out.println("Enter the index");
                         if (scanner.hasNextInt()) {
                             index = scanner.nextInt();
                         } else {
@@ -111,27 +84,37 @@ public class Main {
                         }
                     } while (index == null);
 
+                    if (index < 0 || index >= figures.size()) {
+                        System.out.println("The index is not valid");
+                        return;
+                    }
                     figures.deleteAtIndex(index);
                 }
                 case 3 -> figures.print(System.out);
                 case 4 -> {
-                    String filepath;
-                    PrintStream fileStream;
-                    while (true) {
-                        System.out.println("Enter the full path of a file where to store the figures:\n");
+                    String filepath = "";
+                    PrintStream fileStream = null;
+                    do {
+                        System.out.println("Enter the full path of a file where to store the figures:");
+                        if (scanner.hasNext()) {
+                            filepath = scanner.next();
+                        } else {
+                            scanner.next();
+                        }
                         try {
-                            filepath = scanner.nextLine();
                             fileStream = new PrintStream(filepath);
-                            break;
-                        } catch (FileNotFoundException | NoSuchElementException | IllegalStateException e) {
-                            scanner = new Scanner(System.in);
+                        } catch (FileNotFoundException e) {
+                            System.out.println("Enter valid existing file");
                         }
                     }
+                    while (fileStream == null);
                     figures.print(fileStream);
                     fileStream.close();
                 }
                 case 5 -> System.out.println("You exited the program");
             }
         } while (chosenOption == null || chosenOption != 5);
+
+        scanner.close();
     }
 }

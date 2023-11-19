@@ -1,6 +1,5 @@
 package Figures;
 
-import Figures.Triangle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,7 +89,8 @@ public class TriangleTest {
         Triangle triangle1 = new Triangle(6, 8, 10);
         Triangle triangle2 = new Triangle(6, 8, 10);
         assertTrue(triangle1.equals(triangle2) && triangle2.equals(triangle1));
-        assertEquals(triangle1.hashCode(), triangle2.hashCode(), "The hashCodes must be the same");
+        assertEquals(triangle1.hashCode(), triangle2.hashCode(),
+                "The hashCodes must be the same");
     }
 
     @Test
@@ -105,13 +105,19 @@ public class TriangleTest {
     void testToStringMethodForTriangle() {
         Triangle attempt = new Triangle(4, 5, 3);
         String str = attempt.toString();
-        assertNotEquals(null, str, "The string should be not null");
+        assertNotEquals(null, str,
+                "The string should be not null");
         String[] array = str.split(" ");
-        assertEquals(4, array.length, "The string must contain 4 elements");
-        assertEquals("triangle", array[0], "The first part of the string should be triangle");
-        assertEquals(Double.toString(attempt.getShortestSide()), array[1], "The first side length must be equal to the shortest side");
-        assertEquals(Double.toString(attempt.getMiddleSide()), array[2], "The second side length must be equal to the middle side");
-        assertEquals(Double.toString(attempt.getLongestSide()), array[3], "The third side length must be equal to the longest side");
+        assertEquals(4, array.length,
+                "The string must contain 4 elements");
+        assertEquals("triangle", array[0],
+                "The first part of the string should be triangle");
+        assertEquals(Double.toString(attempt.getShortestSide()), array[1],
+                "The first side length must be equal to the shortest side");
+        assertEquals(Double.toString(attempt.getMiddleSide()), array[2],
+                "The second side length must be equal to the middle side");
+        assertEquals(Double.toString(attempt.getLongestSide()), array[3],
+                "The third side length must be equal to the longest side");
     }
 
 }

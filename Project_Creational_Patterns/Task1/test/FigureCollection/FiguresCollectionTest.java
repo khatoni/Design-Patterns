@@ -2,13 +2,14 @@ package FigureCollection;
 
 import Factories.AbstractFigureFactory;
 import Factories.FigureFactory;
+import Figures.Circle;
 import Figures.Figure;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -16,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,35 +28,37 @@ public class FiguresCollectionTest {
     @BeforeEach
     void initialise() {
         collection = new FiguresCollection();
-        String triangleFromIn = "triangle 3.5 4.5 5.5\n" +
-                "rectangle 10 15\n" +
-                "circle 5.84\n" +
-                "circle 7.45";
+        String triangleFromIn = """
+                triangle 3.5 4.5 5.5
+                rectangle 10 15
+                circle 5.84
+                circle 7.45""";
         InputStream inputStream = new ByteArrayInputStream(triangleFromIn.getBytes());
         System.setIn(inputStream);
-        FigureFactory factory = new AbstractFigureFactory().create("stdin");
+        FigureFactory factory = AbstractFigureFactory.create("stdin");
         for (int i = 0; i < 4; i++) {
             collection.addFigure(factory.createFigure());
         }
-       /*
-        collection.addFigure(new AbstractFigureFactory().create("random").createFigure());
-        collection.addFigure(new AbstractFigureFactory().create("random").createFigure());
-        collection.addFigure(new AbstractFigureFactory().create("random").createFigure());
-        collection.addFigure(new AbstractFigureFactory().create("random").createFigure());
-        collection.addFigure(new AbstractFigureFactory().create("random").createFigure());
-
-        */
     }
 
     @Test
     void testAddFigure() {
-
+        Circle circle = new Circle(10.25);
+        int sizeBeforeAdd = collection.size();
+        collection.addFigure(circle);
+        int sizeAfter = collection.size();
+        assertEquals(sizeAfter - 1, sizeBeforeAdd,
+                "The size after addition is not as expected");
+        assertTrue(collection.contains(circle),
+                "The collection must contain the figure after addition");
     }
 
     @Test
     void testGetElementAtInvalidIndex() {
-        assertThrows(IndexOutOfBoundsException.class, () -> collection.getAt(-2));
-        assertThrows(IndexOutOfBoundsException.class, () -> collection.getAt(15));
+        assertThrows(IndexOutOfBoundsException.class, () -> collection.getAt(-2),
+                "The expected index should be non negative");
+        assertThrows(IndexOutOfBoundsException.class, () -> collection.getAt(15),
+                "The index should be less than the size");
     }
 
     @Test
@@ -73,18 +75,22 @@ public class FiguresCollectionTest {
         Figure tmpFigureAtIndexOne = collection.clone(1);
         Figure tmpFigureAtIndexTwo = collection.clone(2);
         Figure tmpFigureAtIndexThree = collection.clone(3);
-        assertTrue(tmpFigureAtIndexZero.equals(collection.getAt(0)));
-        assertTrue(tmpFigureAtIndexOne.equals(collection.getAt(1)));
-        assertTrue(tmpFigureAtIndexTwo.equals(collection.getAt(2)));
-        assertTrue(tmpFigureAtIndexThree.equals(collection.getAt(3)));
+        assertEquals(tmpFigureAtIndexZero, collection.getAt(0),
+                "The figures must be the same after cloning");
+        assertEquals(tmpFigureAtIndexOne, collection.getAt(1),
+                "The figures must be the same after cloning");
+        assertEquals(tmpFigureAtIndexTwo, collection.getAt(2),
+                "The figures must be the same after cloning");
+        assertEquals(tmpFigureAtIndexThree, collection.getAt(3),
+                "The figures must be the same after cloning");
     }
 
     @Test
     void testDeleteFigureAtInvalidIndex() {
         assertThrows(IndexOutOfBoundsException.class, () -> collection.deleteAtIndex(-2),
-                "IllegalArgumentException is expected because of negative index or out of bounds");
+                "IndexOutOfBounds is expected because of negative index or out of bounds");
         assertThrows(IndexOutOfBoundsException.class, () -> collection.deleteAtIndex(15),
-                "IllegalArgumentException is expected because of negative index or out of bounds");
+                "IndexOutOfBounds is expected because of negative index or out of bounds");
     }
 
     @Test
@@ -92,9 +98,12 @@ public class FiguresCollectionTest {
         int collectionSizeBeforeDeletion = collection.size();
         Figure beforeDeletion = collection.getAt(2);
         Figure afterDeletion = collection.deleteAtIndex(2);
-        assertTrue(beforeDeletion.equals(afterDeletion));
+        assertEquals(beforeDeletion, afterDeletion);
         int collectionSizeAfterDeletion = collection.size();
-        assertTrue(collectionSizeBeforeDeletion - 1 == collectionSizeAfterDeletion);
+        assertEquals(collectionSizeBeforeDeletion - 1, collectionSizeAfterDeletion,
+                "The size should reduce after deletion");
+        assertFalse(collection.contains(beforeDeletion),
+                "The collection should not contain the figure after deletion");
     }
 
     @Test
@@ -106,37 +115,27 @@ public class FiguresCollectionTest {
         System.setOut((capture));
         collection.print(System.out);
         System.setOut(out);
+        capture.close();
         String capturedString = testOutput.toString(StandardCharsets.UTF_8);
-        System.out.println(capturedString);
-        // assertEquals(capturedString.trim(),printAnswer.trim());
         assertEquals(capturedString.replaceAll("\\s", ""), printAnswer.replaceAll("\\s", ""));
     }
 
+
     @Test
-    void testPrintToFile() {
+    void testPrintToFile() throws IOException {
         String printAnswer = "triangle 3.5 4.5 5.5\nrectangle 10.0 15.0\ncircle 5.84\ncircle 7.45\n";
-        String filepath = "C:\\Users\\Hp\\Desktop\\Design-Patterns\\Project1\\Task1\\resources\\alabala.txt";
-        ByteArrayOutputStream testOutput = new ByteArrayOutputStream();
-        PrintStream fileStream = null;
-        try {
-            fileStream = new PrintStream(filepath);
-            collection.print(fileStream);
-        } catch (FileNotFoundException e) {
-
+        String filepath = "resources/testPrint.txt";
+        File testPrintFile = new File(filepath);
+        PrintStream fileStream = new PrintStream(testPrintFile);
+        collection.print(fileStream);
+        fileStream.close();
+        StringBuilder content = new StringBuilder();
+        List<String> lines = Files.readAllLines(Paths.get(filepath));
+        for (String line : lines) {
+            content.append(line);
         }
-        String content="";
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(filepath));
-            for(int i =0 ;i<lines.size();i++) {
-                content+= lines.get(i);
-            }
-        }
-        catch(IOException e) {}
-
-        System.out.println(content);
-        System.out.println(testOutput.toString(StandardCharsets.UTF_8));
-
-        assertEquals(content.replaceAll("\\s", ""), printAnswer.replaceAll("\\s", ""));
+        testPrintFile.delete();
+        assertEquals(content.toString().replaceAll("\\s", ""), printAnswer.replaceAll("\\s", ""));
     }
 
 }

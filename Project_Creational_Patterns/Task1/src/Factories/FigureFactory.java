@@ -2,6 +2,6 @@ package Factories;
 
 import Figures.Figure;
 
-public interface FigureFactory  {
+public interface FigureFactory {
     Figure createFigure();
 }

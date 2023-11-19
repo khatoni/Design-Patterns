@@ -10,13 +10,15 @@ public class Triangle implements Figure {
     private final double longestSide;
 
     public Triangle(double side1, double side2, double side3) {
-        // in one function normalization and initialization or separate
+
         if (side1 <= 0 || side2 <= 0 || side3 <= 0) {
-            throw new IllegalArgumentException("One or more of the sides have not valid length(should be more than 0)");
+            throw new IllegalArgumentException(
+                    "One or more of the sides have not valid length(should be more than 0)");
         }
 
         if (!((side1 + side2 > side3) && (side1 + side3 > side2) && (side2 + side3 > side1))) {
-            throw new IllegalArgumentException("The lengths provided do not satisfy the triangle inequality theorem");
+            throw new IllegalArgumentException(
+                    "The lengths provided do not satisfy the triangle inequality theorem");
         }
         if (Double.compare(side1, side2) == 0 && Double.compare(side2, side3) == 0) {
             shortestSide = middleSide = longestSide = side1;
@@ -36,7 +38,8 @@ public class Triangle implements Figure {
 
     public Triangle(Triangle other) {
         if (this == other || other == null) {
-            throw new IllegalArgumentException("The argument should not be null or the same reference");
+            throw new IllegalArgumentException(
+                    "The argument should not be null or the same reference");
         }
         this.shortestSide = other.shortestSide;
         this.middleSide = other.middleSide;

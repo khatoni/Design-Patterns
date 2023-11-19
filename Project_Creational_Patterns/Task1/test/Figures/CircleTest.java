@@ -1,6 +1,5 @@
 package Figures;
 
-import Figures.Circle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,13 +22,15 @@ public class CircleTest {
     void testCircleIsCreatedSuccessfully() {
         //should I make type checking
         Circle firstAttempt = new Circle(7.56);
-        assertEquals(7.56, firstAttempt.getRadius(), 0.000001, "The expected radius should be 7.56");
+        assertEquals(7.56, firstAttempt.getRadius(), 0.000001,
+                "The expected radius should be 7.56");
         Circle secondAttempt = new Circle(0.00005);
-        assertEquals(0.00005, secondAttempt.getRadius(), 0.00000001, "The expected radius is 0.00005");
+        assertEquals(0.00005, secondAttempt.getRadius(), 0.00000001,
+                "The expected radius is 0.00005");
     }
 
     @Test
-    void testPerimeterIsCalculatedCorrectlyWithPrecisionForRadius10() {
+    void testPerimeterIsCalculatedCorrectlyWithPrecisionForRadiusTen() {
         Circle tmp = new Circle(10);
         assertEquals(62.831, tmp.calculatePerimeter(), 0.001,
                 "Expected value for the perimeter with radius 10 should be 62.8");
@@ -40,7 +41,7 @@ public class CircleTest {
     }
 
     @Test
-    void testPerimeterIsCalculatedCorrectlyWithPrecisionForRadius1() {
+    void testPerimeterIsCalculatedCorrectlyWithPrecisionForRadiusOne() {
         Circle tmp = new Circle(1);
         assertEquals(6.283, tmp.calculatePerimeter(), 0.001,
                 "Expected value for the perimeter with radius 10 should be 62.8");
@@ -55,10 +56,13 @@ public class CircleTest {
     void testToStringMethodForCircle() {
         Circle attempt = new Circle(3.121);
         String str = attempt.toString();
-        assertNotEquals(null, str, "The string should be not null");
+        assertNotEquals(null, str,
+                "The string should be not null");
         String[] array = str.split(" ");
-        assertEquals("circle", array[0], "The first part of the string should be circle");
-        assertEquals(Double.toString(attempt.getRadius()), array[1], "The second part of the string should be equal to the radius");
+        assertEquals("circle", array[0],
+                "The first part of the string should be circle");
+        assertEquals(Double.toString(attempt.getRadius()), array[1],
+                "The second part of the string should be equal to the radius");
     }
 
     @Test

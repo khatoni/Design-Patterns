@@ -29,16 +29,20 @@ public class RandomFigureFactory implements FigureFactory {
                 yield new Rectangle(firstSide, secondSide);
             }
             case 2 -> {
-                while (true) {
+                Triangle triangle = null;
+                do {
+                    double firstSide = generatible.generateRandomDouble();
+                    double secondSide = generatible.generateRandomDouble();
+                    double thirdSide = generatible.generateRandomDouble();
                     try {
-                        double firstSide = generatible.generateRandomDouble();
-                        double secondSide = generatible.generateRandomDouble();
-                        double thirdSide = generatible.generateRandomDouble();
-                        yield new Triangle(firstSide, secondSide, thirdSide);
+                        triangle = new Triangle(firstSide, secondSide, thirdSide);
                     } catch (IllegalArgumentException e) {
-
+                        triangle = null;
                     }
                 }
+                while (triangle == null);
+                yield triangle;
+
             }
             default -> throw new IllegalStateException("Unexpected value: " + randNumber);
         };

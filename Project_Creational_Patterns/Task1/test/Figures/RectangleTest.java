@@ -1,6 +1,5 @@
 package Figures;
 
-import Figures.Rectangle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,13 +40,12 @@ public class RectangleTest {
         assertEquals(8.90, rectangle1.calculatePerimeter(), 0.0001,
                 "The expected value is not satisfied");
         Rectangle rectangle2 = new Rectangle(12.38, 15.20);
-        assertEquals(27.58, rectangle2.calculatePerimeter(), 0001,
+        assertEquals(27.58, rectangle2.calculatePerimeter(), 0.001,
                 "The expected value is not satisfied");
     }
 
     @Test
     void testEqualsWithTwoDifferentTypes() {
-        // should I use always some random constants or declare default constructor
         Rectangle rectangle = new Rectangle(5, 10);
         Object obj = new Object();
         assertNotEquals(rectangle, obj, "Expected false, because the objects are different");
@@ -55,14 +53,12 @@ public class RectangleTest {
 
     @Test
     void testEqualsWithTheSameObject() {
-        // should I use always some random constants or declare default constructor
         Rectangle rectangle = new Rectangle(12, 12);
         assertEquals(rectangle, rectangle, "The circles must be not the same object");
     }
 
     @Test
     void testEqualsWithTwoDifferentRectangles() {
-        // should I use always some random constants or declare default constructor
         Rectangle rectangle1 = new Rectangle(8, 6);
         Rectangle rectangle2 = new Rectangle(6, 9);
         assertNotEquals(rectangle1, rectangle2, "The triangles are different, but the function returned true");
@@ -70,7 +66,6 @@ public class RectangleTest {
 
     @Test
     void testEqualsWithTwoEqualRectangles() {
-        // should I use copy constructor here
         Rectangle rectangle1 = new Rectangle(9, 6);
         Rectangle rectangle2 = new Rectangle(6, 9);
         assertEquals(rectangle1, rectangle2, "The triangles are equal, but the function returned false");
@@ -96,11 +91,16 @@ public class RectangleTest {
     void testToStringMethodForTriangle() {
         Rectangle attempt = new Rectangle(16.53, 6.267);
         String str = attempt.toString();
-        assertNotEquals(null, str, "The string should be not null");
+        assertNotEquals(null, str,
+                "The string should be not null");
         String[] array = str.split(" ");
-        assertEquals(3, array.length, "The string must contain 3 elements");
-        assertEquals("rectangle", array[0], "The first part of the string should be rectangle");
-        assertEquals(Double.toString(attempt.getShortestSide()), array[1], "The first side length must be equal to the shortest side");
-        assertEquals(Double.toString(attempt.getLongestSide()), array[2], "The second side length must be equal to the longest side");
+        assertEquals(3, array.length,
+                "The string must contain 3 elements");
+        assertEquals("rectangle", array[0],
+                "The first part of the string should be rectangle");
+        assertEquals(Double.toString(attempt.getShortestSide()), array[1],
+                "The first side length must be equal to the shortest side");
+        assertEquals(Double.toString(attempt.getLongestSide()), array[2],
+                "The second side length must be equal to the longest side");
     }
 }

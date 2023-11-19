@@ -2,7 +2,6 @@ package Factories;
 
 import Figures.Circle;
 import Figures.Figure;
-import Factories.FigureFromString;
 import Figures.Rectangle;
 import Figures.Triangle;
 import org.junit.jupiter.api.Test;

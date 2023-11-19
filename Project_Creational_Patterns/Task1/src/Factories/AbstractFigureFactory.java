@@ -4,24 +4,22 @@ import RandomNumberGenerator.RandomGenerator;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Random;
 import java.util.Scanner;
 
 public class AbstractFigureFactory {
 
-    public AbstractFigureFactory() {
-    }
-
-    public FigureFactory create(String str) {
-        String[] strTokens = str.split(" ");
+    public static FigureFactory create(String str) {
+        String[] strTokens = str.split("\\s");
         switch (strTokens[0]) {
             case "random" -> {
-                return new RandomFigureFactory(new RandomGenerator());
+                return new RandomFigureFactory(new RandomGenerator(new Random()));
             }
             case "file" -> {
                 try {
                     return new StreamFigureFactory(new Scanner(new FileReader(strTokens[1])));
                 } catch (FileNotFoundException e) {
-                    System.out.println("nema file");
+                    System.out.println("no such file");
                     return null;
                 }
 

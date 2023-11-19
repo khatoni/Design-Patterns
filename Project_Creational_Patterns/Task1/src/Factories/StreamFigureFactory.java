@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class StreamFigureFactory implements FigureFactory {
+public class StreamFigureFactory implements FigureFactory, AutoCloseable {
     private final Scanner scanner;
 
     public StreamFigureFactory(Scanner scanner) {
@@ -24,5 +24,10 @@ public class StreamFigureFactory implements FigureFactory {
         } catch (NoSuchElementException | IllegalStateException | IllegalArgumentException e) {
             return null;
         }
+    }
+
+    @Override
+    public void close() {
+        scanner.close();
     }
 }

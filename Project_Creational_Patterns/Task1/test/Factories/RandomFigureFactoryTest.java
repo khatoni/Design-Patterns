@@ -14,28 +14,29 @@ public class RandomFigureFactoryTest {
     @Test
     void testCreationOfCircleWithValidRandomNumbers() {
 
-        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorCircle());
+        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorCircleStub());
         Figure testFigure = figureFactory.createFigure();
         assertTrue(testFigure instanceof Circle);
     }
 
     @Test
     void testCreationOfRectangleWithValidNumbers() {
-        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorRectangle());
+        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorRectangleStub());
         Figure testFigure = figureFactory.createFigure();
         assertTrue(testFigure instanceof Rectangle);
     }
 
     @Test
     void testCreationOfTriangleWithValidNumbers() {
-        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorTriangle());
+        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorTriangleStub());
         Figure testFigure = figureFactory.createFigure();
         assertTrue(testFigure instanceof Triangle);
     }
 
     @Test
     void testCreationOfFigureWithInvalidRandomNumber() {
-        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorInvalid());
+        RandomFigureFactory figureFactory = new RandomFigureFactory(new CustomGeneratorInvalidStub());
         assertThrows(IllegalStateException.class, figureFactory::createFigure);
     }
+
 }

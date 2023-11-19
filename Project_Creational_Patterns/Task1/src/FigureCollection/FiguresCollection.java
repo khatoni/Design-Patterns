@@ -8,10 +8,14 @@ import java.util.List;
 
 public class FiguresCollection {
 
-    private final List<Figure> collection;
+    private List<Figure> collection;
 
     public FiguresCollection() {
         collection = new ArrayList<>();
+    }
+
+    public boolean contains(Figure figure) {
+        return collection.contains(figure);
     }
 
     public int size() {
