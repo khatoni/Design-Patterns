@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class LabelSTDINProxy implements Label {
 
+    private Scanner scanner;
     private final int timeout;
     private int currentTimeout;
     SimpleLabel labelReference;
@@ -15,6 +16,7 @@ public class LabelSTDINProxy implements Label {
         this.timeout = timeout;
         currentTimeout = 0;
         labelReference = null;
+        scanner = new Scanner(System.in);
     }
 
     @Override
@@ -33,14 +35,12 @@ public class LabelSTDINProxy implements Label {
 
     private String readLabelText() {
         System.out.println("Enter the label text:");
-        Scanner scanner = new Scanner(System.in);
-        String value = scanner.nextLine();
-        return value;
+        String data = scanner.nextLine();
+        return data;
     }
 
     private void changeLabelText() {
         System.out.println("Do you want to change the label: 1-NO, 2-YES");
-        Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
         switch (option) {
             case "NO" -> System.out.println("You decided to keep the label text");

@@ -25,6 +25,7 @@ public class ConcreteLabelPrinterTest {
         System.setOut(new PrintStream(System.out));
         Assertions.assertEquals("Here is a label: testRich" + System.lineSeparator(), capturedOutput,
             "The expected test was testRich");
+        printStream.close();
     }
 
     @Test
@@ -39,6 +40,7 @@ public class ConcreteLabelPrinterTest {
         System.setOut(new PrintStream(System.out));
         Assertions.assertEquals("Here is a label: testHelpLabel" + System.lineSeparator(), capturedOutput,
             "The expected test was testHelpLabel");
+        printStream.close();
     }
 
     @Test
@@ -53,6 +55,7 @@ public class ConcreteLabelPrinterTest {
         System.setOut(new PrintStream(System.out));
         Assertions.assertEquals("Here is a label: testSimple" + System.lineSeparator(), capturedOutput,
             "The expected test was testSimple");
+        printStream.close();
     }
 
     @Test
@@ -70,6 +73,7 @@ public class ConcreteLabelPrinterTest {
                 System.lineSeparator(),
             capturedOutput,
             "The expected result differs from the received");
+        printStream.close();
     }
 
     @Test
@@ -88,6 +92,7 @@ public class ConcreteLabelPrinterTest {
                 System.lineSeparator(),
             capturedOutput,
             "The expected result differs from the received");
+        printStream.close();
     }
 
     @Test
@@ -105,5 +110,6 @@ public class ConcreteLabelPrinterTest {
                 System.lineSeparator(),
             capturedOutput,
             "The expected result differs from the received");
+        printStream.close();
     }
 }

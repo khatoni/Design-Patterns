@@ -1,7 +1,6 @@
 package proxy;
 
 import bridge.implementations.Label;
-import proxy.LabelSTDINProxy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,40 +13,35 @@ public class LabelSTDINProxyTest {
     @Test
     void testGetTextFirstTime() throws IOException {
         Label l = new LabelSTDINProxy(3);
-        InputStream inputStream = new ByteArrayInputStream("first text".getBytes());
+        InputStream inputStream = new ByteArrayInputStream(("first text" + System.lineSeparator()).getBytes());
         System.setIn(inputStream);
-        inputStream.close();
         Assertions.assertEquals("first text", l.getText(), "The expected result was first text");
+        inputStream.close();
     }
 
     @Test
     void testGetTextMultipleTimes() throws IOException {
         Label l = new LabelSTDINProxy(4);
-        InputStream inputStream = new ByteArrayInputStream("first text".getBytes());
+        InputStream inputStream = new ByteArrayInputStream(("first text" + System.lineSeparator()).getBytes());
         System.setIn(inputStream);
-        inputStream.close();
         String firstCall = l.getText();
         String secondCall = l.getText();
         String thirdCall = l.getText();
         Assertions.assertEquals("first text", thirdCall, "The expected result was first text");
+        inputStream.close();
     }
 
     @Test
     void testGetTextTimeOutOptionKeepTheSameLabel() throws IOException {
         Label l = new LabelSTDINProxy(2);
-        InputStream inputStream = new ByteArrayInputStream("first text\nNO".getBytes());
+        InputStream inputStream = new ByteArrayInputStream("first text\nNO\n".getBytes());
         System.setIn(inputStream);
-        inputStream.close();
         String firstCall = l.getText();
         String secondCall = l.getText();
-        int myInt = 1;
-        byte myByte = (byte) myInt;
-        byte[] options = {myByte};
-        InputStream integerOption = new ByteArrayInputStream(options);
-        System.setIn(integerOption);
         Assertions.assertEquals("first text", firstCall);
         String thirdCall = l.getText();
         Assertions.assertEquals("first text", thirdCall);
+        inputStream.close();
     }
 
     @Test
@@ -64,5 +58,6 @@ public class LabelSTDINProxyTest {
         Assertions.assertEquals("first text", firstCall);
         String secondCall = l.getText();
         Assertions.assertEquals("second text", secondCall);
+        firstStream.close();
     }
 }
