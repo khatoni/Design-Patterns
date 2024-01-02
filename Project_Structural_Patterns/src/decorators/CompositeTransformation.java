@@ -1,6 +1,6 @@
 package decorators;
 
-import bridge.Label;
+import labelHierarchy.Label;
 import transformations.TransformationBase;
 
 public class CompositeTransformation extends LabelDecoratorBase {
@@ -12,12 +12,16 @@ public class CompositeTransformation extends LabelDecoratorBase {
         this.transformations = transformations;
     }
 
-    public void execute() {
+    @Override
+    public String getText() {
         String text = label.getText();
+        if (transformations == null) {
+            return text;
+        }
         for (TransformationBase currentTransformation : transformations) {
             text = currentTransformation.transform(text);
         }
-        System.out.println(text);
+        return text;
     }
 
 }

@@ -1,4 +1,4 @@
-import bridge.Label;
+import labelHierarchy.Label;
 
 class LabelPrinter {
     public static void print(Label label) {

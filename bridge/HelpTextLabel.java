@@ -1,7 +1,5 @@
 package bridge;
-
-import bridge.SimpleLabel;
-
+/*
 public class HelpTextLabel extends SimpleLabel {
     private String helpText;
 
@@ -11,5 +9,5 @@ public class HelpTextLabel extends SimpleLabel {
     }
 
 
-
 }
+*/

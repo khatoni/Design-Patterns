@@ -1,46 +1,34 @@
 package decorators;
 
-import bridge.Label;
+import labelHierarchy.Label;
 
-public class LabelDecoratorBase implements Label {
+public abstract class LabelDecoratorBase implements Label {
 
     protected Label label;
-
-    public LabelDecoratorBase() {
-        label = null;
-    }
 
     public LabelDecoratorBase(Label label) {
         this.label = label;
     }
 
-    public void setLabel(Label label) {
-        this.label = label;
-    }
-
-   /* public static Label removeDecoratorFrom(Label label, Class <? extends LabelDecoratorBase> decoratorType) {
-        if(label == null) {
-            // Nothing to do
-        }
-
-        else if(LabelDecoratorBase.class.isAssignableFrom(label)) {
-            // label refers to a decorator. Proceed to remove.
-            LabelDecoratorBase ldb = (LabelDecoratorBase)label;
+    public static Label removeDecoratorFrom(Label label, LabelDecoratorBase decoratorType) {
+        if (label == null) {
+            throw new IllegalArgumentException("Label cannot be null in order to remove a decorator");
+        } else if (LabelDecoratorBase.class.isAssignableFrom(label.getClass())) {
+            LabelDecoratorBase ldb = (LabelDecoratorBase) label;
             return ldb.removeDecorator(decoratorType);
-        }
-
-        else {
-            // Label is not a decorator, but an actual label.
-            // Nothing to do in this case
+        } else {
+            return label;
         }
     }
 
-    public Label removeDecorator(Class decoratorType) {
-
-    }
-*/
-    @Override
-    public String getText() {
-        return label.getText();
+    public Label removeDecorator(LabelDecoratorBase decoratorType) {
+        if (this.equals(decoratorType)) {
+            return label;
+        } else if (LabelDecoratorBase.class.isAssignableFrom(label.getClass())) {
+            label = ((LabelDecoratorBase) label).removeDecorator(decoratorType);
+            return this;
+        } else {
+            return this;
+        }
     }
 }

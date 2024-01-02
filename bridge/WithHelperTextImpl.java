@@ -1,14 +1,13 @@
 package bridge;
 
-public class NoHelperTextImpl implements Label {
-
+public class WithHelperTextImpl implements Label {
     @Override
     public String getText() {
         return null;
     }
 
-    @Override
+   /* @Override
     public String getHelperText() {
         return "";
-    }
+    }*/
 }
