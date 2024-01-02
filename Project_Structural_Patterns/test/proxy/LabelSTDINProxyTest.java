@@ -1,5 +1,7 @@
-package labelHierarchy;
+package proxy;
 
+import bridge.implementations.Label;
+import proxy.LabelSTDINProxy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

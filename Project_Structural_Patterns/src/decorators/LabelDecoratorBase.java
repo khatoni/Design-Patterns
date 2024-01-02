@@ -1,6 +1,6 @@
 package decorators;
 
-import labelHierarchy.Label;
+import bridge.implementations.Label;
 
 public abstract class LabelDecoratorBase implements Label {
 

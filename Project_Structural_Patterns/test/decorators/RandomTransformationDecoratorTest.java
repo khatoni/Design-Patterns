@@ -1,7 +1,7 @@
 package decorators;
 
-import labelHierarchy.Label;
-import labelHierarchy.SimpleLabel;
+import bridge.implementations.Label;
+import bridge.implementations.SimpleLabel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

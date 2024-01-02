@@ -1,4 +1,7 @@
-package labelHierarchy;
+package proxy;
+
+import bridge.implementations.Label;
+import bridge.implementations.SimpleLabel;
 
 import java.util.Scanner;
 

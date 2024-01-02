@@ -1,6 +1,6 @@
 package decorators;
 
-import labelHierarchy.Label;
+import bridge.implementations.Label;
 import transformations.TransformationBase;
 
 public class CompositeTransformation extends LabelDecoratorBase {
