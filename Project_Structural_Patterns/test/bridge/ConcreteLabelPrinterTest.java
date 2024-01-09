@@ -1,115 +1,57 @@
 package bridge;
 
-import bridge.abstraction.ConcreteLabelPrinter;
-import bridge.abstraction.LabelPrinter;
+import bridge.abstraction.BridgeHelpText;
+import bridge.abstraction.BridgeLabel;
 import bridge.implementations.HelpLabel;
+import bridge.implementations.Label;
 import bridge.implementations.RichLabel;
 import bridge.implementations.SimpleLabel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 public class ConcreteLabelPrinterTest {
 
     @Test
     void testGetTextThroughBridgeRichLabel() {
         SimpleLabel toTest = new RichLabel("testRich", 4, 12, "Times New Roman");
-        LabelPrinter labelPrinter = new ConcreteLabelPrinter(toTest);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outputStream);
-        System.setOut(printStream);
-        labelPrinter.print();
-        String capturedOutput = outputStream.toString();
-        System.setOut(new PrintStream(System.out));
-        Assertions.assertEquals("Here is a label: testRich" + System.lineSeparator(), capturedOutput,
-            "The expected test was testRich");
-        printStream.close();
+        BridgeLabel label = new BridgeHelpText(toTest);
+        Assertions.assertEquals("testRich", label.getText(), "The text must be testRich");
     }
 
     @Test
     void testGetTextThroughBridgeHelpTextLabel() {
         SimpleLabel toTest = new HelpLabel("testHelpLabel", "additional info");
-        LabelPrinter labelPrinter = new ConcreteLabelPrinter(toTest);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outputStream);
-        System.setOut(printStream);
-        labelPrinter.print();
-        String capturedOutput = outputStream.toString();
-        System.setOut(new PrintStream(System.out));
-        Assertions.assertEquals("Here is a label: testHelpLabel" + System.lineSeparator(), capturedOutput,
-            "The expected test was testHelpLabel");
-        printStream.close();
+        BridgeHelpText label = new BridgeHelpText(toTest);
+        Assertions.assertEquals("testHelpLabel", label.getText(), "The text must be testHelpLabel");
+        Assertions.assertEquals("additional info", label.getHelperText(), "The expected text is additional info");
+
     }
 
     @Test
     void testGetTextThroughBridgeSimpleLabel() {
         SimpleLabel toTest = new SimpleLabel("testSimple");
-        LabelPrinter labelPrinter = new ConcreteLabelPrinter(toTest);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outputStream);
-        System.setOut(printStream);
-        labelPrinter.print();
-        String capturedOutput = outputStream.toString();
-        System.setOut(new PrintStream(System.out));
-        Assertions.assertEquals("Here is a label: testSimple" + System.lineSeparator(), capturedOutput,
-            "The expected test was testSimple");
-        printStream.close();
+        BridgeLabel label = new BridgeHelpText(toTest);
+        Assertions.assertEquals("testSimle", label.getText());
     }
 
     @Test
     void testGetHelperTextThroughBridgeRichLabel() {
-        SimpleLabel toTest = new RichLabel("testRich", 4, 12, "Times New Roman");
-        LabelPrinter labelPrinter = new ConcreteLabelPrinter(toTest);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outputStream);
-        System.setOut(printStream);
-        labelPrinter.printWithHelpText();
-        String capturedOutput = outputStream.toString();
-        System.setOut(new PrintStream(System.out));
-        Assertions.assertEquals(
-            "Here is a label: testRich" + System.lineSeparator() + "Some help information about this label: " +
-                System.lineSeparator(),
-            capturedOutput,
-            "The expected result differs from the received");
-        printStream.close();
+        Label toTest = new RichLabel("testRich", 4, 12, "Times New Roman");
+        BridgeHelpText label = new BridgeHelpText(toTest);
+        Assertions.assertEquals("testRich", label.getHelperText());
     }
 
     @Test
     void testGetHelperTextThroughBridgeHelpTextLabel() {
-        SimpleLabel toTest = new HelpLabel("testHelp", "first time testing");
-        LabelPrinter labelPrinter = new ConcreteLabelPrinter(toTest);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outputStream);
-        System.setOut(printStream);
-        labelPrinter.printWithHelpText();
-        String capturedOutput = outputStream.toString();
-        System.setOut(new PrintStream(System.out));
-        Assertions.assertEquals(
-            "Here is a label: testHelp" + System.lineSeparator() +
-                "Some help information about this label: first time testing" +
-                System.lineSeparator(),
-            capturedOutput,
-            "The expected result differs from the received");
-        printStream.close();
+        Label toTest = new HelpLabel("testHelp", "first time testing");
+        BridgeHelpText label = new BridgeHelpText(toTest);
+        Assertions.assertEquals("first time testing", label.getHelperText());
     }
 
     @Test
     void testGetHelperTextThroughBridgeSimpleLabel() {
-        SimpleLabel toTest = new SimpleLabel("testHelp");
-        LabelPrinter labelPrinter = new ConcreteLabelPrinter(toTest);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(outputStream);
-        System.setOut(printStream);
-        labelPrinter.printWithHelpText();
-        String capturedOutput = outputStream.toString();
-        System.setOut(new PrintStream(System.out));
-        Assertions.assertEquals(
-            "Here is a label: testHelp" + System.lineSeparator() + "Some help information about this label: " +
-                System.lineSeparator(),
-            capturedOutput,
-            "The expected result differs from the received");
-        printStream.close();
+        Label toTest = new SimpleLabel("testHelp");
+        BridgeHelpText label = new BridgeHelpText(toTest);
+        Assertions.assertEquals("", label.getHelperText());
     }
 }
