@@ -6,4 +6,5 @@ public interface HierarchyVisitor {
 
     void visitFile(AbstractFile file);
     void visitDirectory(AbstractFile file);
+
 }

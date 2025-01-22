@@ -1,11 +1,12 @@
 package memento;
 
+import structure.AbstractFile;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Set;
 
-public class Memento {
+public interface Memento {
 
-    //store the state of the scan process
 
-    private LocalDateTime timeOfCreatingSnapshot;
 }

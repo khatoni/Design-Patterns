@@ -1,5 +1,6 @@
 package hash;
 
+import exceptions.FailedCalculatingHashException;
 import observer.Observable;
 
 import java.io.IOException;
@@ -8,12 +9,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
-
 public class MD5Sum extends Observable implements ChecksumCalculator {
 
+    private boolean shouldStop = false;
+
     @Override
-    public String calculate(InputStream is) throws IOException {
+    public String calculate(InputStream is) throws FailedCalculatingHashException {
         byte[] b = createHash(is);
         StringBuilder result = new StringBuilder();
         for (byte value : b) {
@@ -23,30 +24,30 @@ public class MD5Sum extends Observable implements ChecksumCalculator {
 
     }
 
-    private byte[] createHash(InputStream is) throws IOException {
-        byte[] buffer = new byte[20000];
+    private byte[] createHash(InputStream is) throws FailedCalculatingHashException {
+        byte[] buffer = new byte[50000];
         MessageDigest complete = null;
         try {
             complete = MessageDigest.getInstance("MD5");
             int totalRead = 0;
             int numRead;
-
             do {
                 numRead = is.read(buffer);
+                totalRead += numRead;
                 if (numRead > 0) {
                     complete.update(buffer, 0, numRead);
                 }
                 notifyAllSubscribers(this, numRead);
                 try {
                     TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    throw new FailedCalculatingHashException("Failed calculating hash");
                 }
-                catch (InterruptedException e) {
+            }
+            while (numRead != -1);
 
-                }
-            } while (numRead != -1);
-
-        } catch (NoSuchAlgorithmException e) {
-
+        } catch (NoSuchAlgorithmException | IOException e) {
+            throw new FailedCalculatingHashException("Failed calculating hash");
         }
         return complete.digest();
     }

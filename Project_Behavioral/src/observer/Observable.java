@@ -1,7 +1,6 @@
 package observer;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public abstract class Observable {
@@ -19,8 +18,12 @@ public abstract class Observable {
         return subscribers.size();
     }
 
+    public boolean containsParticularSubscriber(Observer observer) {
+        return subscribers.contains(observer);
+    }
+
     public void notifyAllSubscribers(Observable sender, Object message) {
-        for(Observer observer: subscribers) {
+        for (Observer observer : subscribers) {
             observer.update(sender, message);
         }
     }

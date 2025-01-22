@@ -1,19 +1,24 @@
 package visitor;
 
 import structure.AbstractFile;
+import structure.File;
 
-public class ReportWriter implements HierarchyVisitor{
+public class ReportWriter extends Visitor {
 
-    @Override
-    public void visitFile(AbstractFile file) {
-        System.out.println("FileName: "+ file.getFilePath() + " FileSize: " + file.getTotalSize());
+    private final AbstractFile startingFile;
+
+    public ReportWriter(AbstractFile startingFile) {
+        this.startingFile = startingFile;
     }
 
     @Override
-    public void visitDirectory(AbstractFile file) {
-        System.out.println("DirectoryName: " + file.getFilePath() + " FileSize " + file.getTotalSize());
-        for(AbstractFile abstractFile: file.getFolderContent()) {
-            abstractFile.accept(this);
-        }
+    public void processFile(AbstractFile file) {
+        System.out.println("FileName: " + file.getFilePath() + " FileSize: " + file.getSize());
     }
+
+    @Override
+    public void run() {
+        visitDirectory(startingFile);
+    }
+
 }

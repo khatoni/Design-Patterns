@@ -1,11 +1,17 @@
 package hash;
 
+import exceptions.FailedCalculatingHashException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MD5SumTest {
 
@@ -43,5 +49,13 @@ public class MD5SumTest {
         InputStream inputStream = new ByteArrayInputStream(initialData.getBytes());
         String expectedResult = "49868b4050daabc0d81c385a21464dad";
         Assertions.assertEquals(expectedResult, calculator.calculate(inputStream));
+    }
+
+    @Test
+    void testCalculateHashFailedException() throws IOException {
+        ChecksumCalculator calculator = new MD5Sum();
+        InputStream inputStream = mock();
+        when(inputStream.read(any())).thenThrow(new IOException());
+        assertThrows(FailedCalculatingHashException.class, ()->calculator.calculate(inputStream));
     }
 }

@@ -1,7 +1,6 @@
 package hash;
 
 import observer.Observable;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +22,7 @@ public class SHA256 extends Observable implements ChecksumCalculator {
     }
 
     private byte[] createHash(InputStream is) throws IOException {
-        byte[] buffer = new byte[4096];
+        byte[] buffer = new byte[50000];
         MessageDigest complete = null;
         try {
             complete = MessageDigest.getInstance("SHA256");
@@ -35,11 +34,10 @@ public class SHA256 extends Observable implements ChecksumCalculator {
                 if (numRead > 0) {
                     complete.update(buffer, 0, numRead);
                 }
-                notifyAllSubscribers(this, totalRead+=numRead);
+                notifyAllSubscribers(this, totalRead += numRead);
                 try {
                     TimeUnit.SECONDS.sleep(1);
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
 
                 }
             } while (numRead != -1);
